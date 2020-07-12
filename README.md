@@ -30,7 +30,7 @@ var body: Some View {
 
 ## Installation
 
-Use Swift Package Manager or just drag and drop the two source files into your project. It supports any of Apple's platforms that support SwiftUI's initial release. So iOS 13, macOS 10.15, tvOS 13, watchOS 6.
+Use Swift Package Manager or just drag and drop the two source files into your project. It supports iOS 14, macOS 10.16/11, tvOS 14, watchOS 7.
 
 ## Improvement ideas
 * Ditch `NSNumber?` as the bound value, and allow binding either `Int?` or `Double?`. I took a quick shot at this, but my generics skills weren't sufficient to figure it out.

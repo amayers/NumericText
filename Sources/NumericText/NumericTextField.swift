@@ -38,9 +38,9 @@ public struct NumericTextField: View {
     }
 
     public var body: some View {
-        TextField(title, text: $string, onEditingChanged: onEditingChanged, onCommit: onCommit)
-            .keyboardType(isDecimalAllowed ? .decimalPad : .numberPad)
+        return TextField(title, text: $string, onEditingChanged: onEditingChanged, onCommit: onCommit)
             .onChange(of: string, perform: numberChanged(newValue:))
+            .modifier(KeyboardModifier(isDecimalAllowed: isDecimalAllowed))
     }
 
     private func numberChanged(newValue: String) {
@@ -52,6 +52,19 @@ public struct NumericTextField: View {
     }
 }
 
+private struct KeyboardModifier: ViewModifier {
+    let isDecimalAllowed: Bool
+
+    func body(content: Content) -> some View {
+        #if os(iOS)
+        return content
+            .keyboardType(isDecimalAllowed ? .decimalPad : .numberPad)
+        #else
+        return content
+        #endif
+    }
+}
+
 struct NumericTextField_Previews: PreviewProvider {
     @State private static var int: NSNumber?
     @State private static var double: NSNumber?
@@ -59,10 +72,10 @@ struct NumericTextField_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             NumericTextField("Int", number: $int, isDecimalAllowed: false)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 .padding()
             NumericTextField("Double", number: $double, isDecimalAllowed: true)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 .padding()
         }
     }
