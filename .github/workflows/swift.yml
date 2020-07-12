@@ -1,0 +1,32 @@
+name: Swift
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Switch to Xcode 12.0
+      uses: maxim-lobanov/setup-xcode@1.0
+      with:
+        xcode-version: 12.0
+    - name: Build Xcode 12.0
+      run: swift build -v
+    - name: Run tests Xcode 12.0
+      run: swift test -v
+    - name: Switch to Xcode 11.6
+      uses: maxim-lobanov/setup-xcode@1.0
+      with:
+        xcode-version: 11.6
+    - name: Build Xcode 11.6
+      run: swift build -v
+    - name: Run tests Xcode 11.6
+      run: swift test -v
