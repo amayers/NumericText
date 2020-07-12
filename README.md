@@ -1,5 +1,7 @@
 # NumericText
 
+![Build](https://github.com/amayers/NumericText/workflows/Swift/badge.svg)
+
 A simple SwiftUI `TextField` that limits user input to numbers.
 
 The most common response in https://stackoverflow.com/questions/58733003/swiftui-how-to-create-textfield-that-only-accepts-numbers (the top search result), advocates just setting a numeric keyboard. But that totally misses cases when used with hardware keyboards. Many of the suggested  
