@@ -7,7 +7,6 @@ public struct NumericTextField: View {
     @Binding private var number: NSNumber?
     @State private var string: String
     private let isDecimalAllowed: Bool
-    private let formatter: NumberFormatter = NumberFormatter()
 
     private let title: LocalizedStringKey
     private let onEditingChanged: (Bool) -> Void
@@ -24,9 +23,8 @@ public struct NumericTextField: View {
     ///     The closure receives a Boolean indicating whether the text field is currently being edited.
     ///   - onCommit: An action to perform when the user performs an action (for example, when the user hits the return key) while the text field has focus.
     public init(_ titleKey: LocalizedStringKey, number: Binding<NSNumber?>, isDecimalAllowed: Bool, onEditingChanged: @escaping (Bool) -> Void = { _ in }, onCommit: @escaping () -> Void = {}) {
-        formatter.numberStyle = .decimal
         _number = number
-        if let number = number.wrappedValue, let string = formatter.string(from: number) {
+        if let number = number.wrappedValue, let string = decimalNumberFormatter.string(from: number) {
         _string = State(initialValue: string)
         } else {
             _string = State(initialValue: "")
@@ -38,17 +36,9 @@ public struct NumericTextField: View {
     }
 
     public var body: some View {
-        return TextField(title, text: $string, onEditingChanged: onEditingChanged, onCommit: onCommit)
-            .onChange(of: string, perform: numberChanged(newValue:))
+        TextField(title, text: $string, onEditingChanged: onEditingChanged, onCommit: onCommit)
+            .numericText(text: $string, number: $number, isDecimalAllowed: isDecimalAllowed)
             .modifier(KeyboardModifier(isDecimalAllowed: isDecimalAllowed))
-    }
-
-    private func numberChanged(newValue: String) {
-        let numeric = newValue.numericValue(allowDecimalSeparator: isDecimalAllowed)
-        if newValue != numeric {
-            string = numeric
-        }
-        number = formatter.number(from: string)
     }
 }
 
