@@ -1,3 +1,5 @@
+![Swift](https://github.com/amayers/NumericText/workflows/Swift/badge.svg)
+
 # NumericText
 
 A simple SwiftUI `TextField` that limits user input to numbers.
