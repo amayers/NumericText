@@ -32,6 +32,13 @@ public struct NumericTextModifier: ViewModifier {
                 }
                 number = decimalNumberFormatter.number(from: numeric)
             }
+            .onChange(of: number, perform: { newValue in
+                if let number = newValue {
+                    text = decimalNumberFormatter.string(from: number) ?? ""
+                } else {
+                    text = ""
+                }
+            })
     }
 }
 

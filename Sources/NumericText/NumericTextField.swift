@@ -25,7 +25,7 @@ public struct NumericTextField: View {
     public init(_ titleKey: LocalizedStringKey, number: Binding<NSNumber?>, isDecimalAllowed: Bool, onEditingChanged: @escaping (Bool) -> Void = { _ in }, onCommit: @escaping () -> Void = {}) {
         _number = number
         if let number = number.wrappedValue, let string = decimalNumberFormatter.string(from: number) {
-        _string = State(initialValue: string)
+            _string = State(initialValue: string)
         } else {
             _string = State(initialValue: "")
         }
