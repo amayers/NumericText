@@ -49,3 +49,4 @@ playground.xcworkspace
 
 .build/
 
+*.xcodeproj

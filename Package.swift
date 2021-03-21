@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "NumericText",
-    platforms: [.iOS(.v14), .macOS(.v11), .watchOS(.v7), .tvOS(.v14)],
+    platforms: [.iOS(.v13), .macOS(.v10_15), .watchOS(.v6), .tvOS(.v13)],
     products: [
         .library(
             name: "NumericText",
