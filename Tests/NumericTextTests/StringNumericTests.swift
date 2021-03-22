@@ -2,10 +2,12 @@ import NumericText
 import XCTest
 
 final class StringNumericTests: XCTestCase {
+    let s = Locale.current.decimalSeparator ?? "."
+    
     func testDoubleDecimal() {
-        XCTAssertEqual("12.3.4".numericValue(allowDecimalSeparator: true), "12.34")
-        XCTAssertEqual("12..34".numericValue(allowDecimalSeparator: true), "12.34")
-        XCTAssertEqual(".1234.".numericValue(allowDecimalSeparator: true), ".1234")
+        XCTAssertEqual("12\(s)3\(s)4".numericValue(allowDecimalSeparator: true), "12\(s)34")
+        XCTAssertEqual("12\(s)34".numericValue(allowDecimalSeparator: true), "12\(s)34")
+        XCTAssertEqual("\(s)1234\(s)".numericValue(allowDecimalSeparator: true), "\(s)1234")
     }
 
     func testObscureNumericCharacters() throws {
@@ -20,8 +22,8 @@ final class StringNumericTests: XCTestCase {
     }
 
     func testAlphaNumeric() {
-        XCTAssertEqual("12a.3b4".numericValue(allowDecimalSeparator: true), "12.34")
+        XCTAssertEqual("12a\(s)3b4".numericValue(allowDecimalSeparator: true), "12\(s)34")
         XCTAssertEqual("12abc34".numericValue(allowDecimalSeparator: true), "1234")
-        XCTAssertEqual("a.1234.".numericValue(allowDecimalSeparator: true), ".1234")
+        XCTAssertEqual("a\(s)1234\(s)".numericValue(allowDecimalSeparator: true), "\(s)1234")
     }
 }

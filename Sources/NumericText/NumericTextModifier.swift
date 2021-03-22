@@ -9,7 +9,7 @@ public struct NumericTextModifier: ViewModifier {
     @Binding public var text: String
     /// A number that will be updated when the `text` is updated.
     @Binding public var number: NSNumber?
-
+        
     /// A modifier that observes any changes to a string, and updates that string to remove any non-numeric characters.
     /// It also will convert that string to a `NSNumber` for easy use.
     ///
@@ -24,15 +24,15 @@ public struct NumericTextModifier: ViewModifier {
     }
 
     public func body(content: Content) -> some View {
-        content
-            .onChange(of: text) { newValue in
+        return content
+            .onChangeShimmed(of: text) { newValue in
                 let numeric = newValue.numericValue(allowDecimalSeparator: isDecimalAllowed)
                 if newValue != numeric {
                     text = numeric
                 }
                 number = decimalNumberFormatter.number(from: numeric)
             }
-            .onChange(of: number, perform: { newValue in
+            .onChangeShimmed(of: number, perform: { newValue in
                 if let number = newValue {
                     text = decimalNumberFormatter.string(from: number) ?? ""
                 } else {
