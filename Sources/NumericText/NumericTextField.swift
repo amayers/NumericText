@@ -7,7 +7,7 @@ public struct NumericTextField: View {
     @Binding private var number: NSNumber?
     @State private var string: String
     private let isDecimalAllowed: Bool
-    private let numberFormatter: NumberFormatter?
+    private let numberFormatter: NumberFormatter
 
     private let title: LocalizedStringKey
     private let onEditingChanged: (Bool) -> Void
@@ -31,14 +31,16 @@ public struct NumericTextField: View {
                 onCommit: @escaping () -> Void = {}
     ) {
         _number = number
-        if let number = number.wrappedValue, let string = decimalNumberFormatter.string(from: number) {
+        
+        self.numberFormatter = numberFormatter ?? decimalNumberFormatter
+        
+        if let number = number.wrappedValue, let string = self.numberFormatter.string(from: number) {
             _string = State(initialValue: string)
         } else {
             _string = State(initialValue: "")
         }
         
         self.isDecimalAllowed = isDecimalAllowed
-        self.numberFormatter = numberFormatter
         
         title = titleKey
         self.onEditingChanged = onEditingChanged
