@@ -19,6 +19,7 @@ public struct NumericTextModifier: ViewModifier {
     ///   - text: The string that this should observe and filter
     ///   - number: A number that should be updated whenever the `text` is updated
     ///   - isDecimalAllowed: Should the user be allowed to enter a decimal number, or an integer
+    ///   - numberFormatter: Custom number formatter used for formatting number in view
     public init(text: Binding<String>, number: Binding<NSNumber?>, isDecimalAllowed: Bool, numberFormatter: NumberFormatter? = nil) {
         _text = text
         _number = number
