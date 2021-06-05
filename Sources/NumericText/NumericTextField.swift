@@ -47,7 +47,7 @@ public struct NumericTextField: View {
 
     public var body: some View {
         TextField(title, text: $string, onEditingChanged: onEditingChanged, onCommit: onCommit)
-            .numericText(text: $string, number: $number, isDecimalAllowed: isDecimalAllowed)
+            .numericText(text: $string, number: $number, isDecimalAllowed: isDecimalAllowed, numberFormatter: numberFormatter)
             .modifier(KeyboardModifier(isDecimalAllowed: isDecimalAllowed))
     }
 }

@@ -48,7 +48,7 @@ public struct NumericTextModifier: ViewModifier {
 public extension View {
     /// A modifier that observes any changes to a string, and updates that string to remove any non-numeric characters.
     /// It also will convert that string to a `NSNumber` for easy use.
-    func numericText(text: Binding<String>, number: Binding<NSNumber?>, isDecimalAllowed: Bool) -> some View {
-        modifier(NumericTextModifier(text: text, number: number, isDecimalAllowed: isDecimalAllowed))
+    func numericText(text: Binding<String>, number: Binding<NSNumber?>, isDecimalAllowed: Bool, numberFormatter: NumberFormatter?) -> some View {
+        modifier(NumericTextModifier(text: text, number: number, isDecimalAllowed: isDecimalAllowed, numberFormatter: numberFormatter))
     }
 }
