@@ -7,6 +7,7 @@ public struct NumericTextField: View {
     @Binding private var number: NSNumber?
     @State private var string: String
     private let isDecimalAllowed: Bool
+    private let numberFormatter: NumberFormatter
 
     private let title: LocalizedStringKey
     private let onEditingChanged: (Bool) -> Void
@@ -19,17 +20,28 @@ public struct NumericTextField: View {
     ///     describing its purpose.
     ///   - number: The number to be displayed and edited.
     ///   - isDecimalAllowed: Should the user be allowed to enter a decimal number, or an integer
+    ///   - numberFormatter: Custom number formatter used for formatting number in view
     ///   - onEditingChanged: An action thats called when the user begins editing `text` and after the user finishes editing `text`.
     ///     The closure receives a Boolean indicating whether the text field is currently being edited.
     ///   - onCommit: An action to perform when the user performs an action (for example, when the user hits the return key) while the text field has focus.
-    public init(_ titleKey: LocalizedStringKey, number: Binding<NSNumber?>, isDecimalAllowed: Bool, onEditingChanged: @escaping (Bool) -> Void = { _ in }, onCommit: @escaping () -> Void = {}) {
+    public init(_ titleKey: LocalizedStringKey,
+                number: Binding<NSNumber?>,
+                isDecimalAllowed: Bool,
+                numberFormatter: NumberFormatter? = nil,
+                onEditingChanged: @escaping (Bool) -> Void = { _ in },
+                onCommit: @escaping () -> Void = {}
+    ) {
         _number = number
-        if let number = number.wrappedValue, let string = decimalNumberFormatter.string(from: number) {
+        
+        self.numberFormatter = numberFormatter ?? decimalNumberFormatter
+        self.isDecimalAllowed = isDecimalAllowed
+        
+        if let number = number.wrappedValue, let string = self.numberFormatter.string(from: number) {
             _string = State(initialValue: string)
         } else {
             _string = State(initialValue: "")
         }
-        self.isDecimalAllowed = isDecimalAllowed
+        
         title = titleKey
         self.onEditingChanged = onEditingChanged
         self.onCommit = onCommit
@@ -37,7 +49,7 @@ public struct NumericTextField: View {
 
     public var body: some View {
         TextField(title, text: $string, onEditingChanged: onEditingChanged, onCommit: onCommit)
-            .numericText(text: $string, number: $number, isDecimalAllowed: isDecimalAllowed)
+            .numericText(text: $string, number: $number, isDecimalAllowed: isDecimalAllowed, numberFormatter: numberFormatter)
             .modifier(KeyboardModifier(isDecimalAllowed: isDecimalAllowed))
     }
 }
